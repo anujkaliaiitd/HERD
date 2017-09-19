@@ -6,7 +6,7 @@ drop_shm
 export ROCE=1			# Don't use RoCE on Apt
 export APT=0
 
-NUM_SERVERS=1			# Number of server processes on the server machine	
+NUM_SERVERS=2			# Number of server processes on the server machine	
 NUM_CLIENT_MACHINES=1	# Number of client machines
 
 rm -rf client-tput		# Re-create a folder for clients to write their stuff into
@@ -38,3 +38,4 @@ for i in `seq 1 $NUM_SERVERS`; do
 	fi
 done
 
+sleep 100000
