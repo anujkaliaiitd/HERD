@@ -94,7 +94,7 @@ void client_exch_dest(struct ctrl_blk *cb)
 
 	struct sockaddr_in serv_addr;
 	struct hostent *server;
-	char server_name[20],sock_port_str[20];
+	char server_name[200],sock_port_str[20];
 
 	for(i = 0; i < NUM_SERVERS; i++) {
 		// Find the server name and port from the "servers" file
