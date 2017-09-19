@@ -2,12 +2,12 @@
 #	1. Run server processes on the server machine
 #	2. ssh into client machines and run the run-machine.sh script
 
-shm-rm.sh				# Remove hugepages
-export ROCE=0			# Don't use RoCE on Apt
-export APT=1
+drop_shm
+export ROCE=1			# Don't use RoCE on Apt
+export APT=0
 
-NUM_SERVERS=7			# Number of server processes on the server machine	
-NUM_CLIENT_MACHINES=12	# Number of client machines
+NUM_SERVERS=1			# Number of server processes on the server machine	
+NUM_CLIENT_MACHINES=1	# Number of client machines
 
 rm -rf client-tput		# Re-create a folder for clients to write their stuff into
 mkdir client-tput
@@ -36,16 +36,5 @@ for i in `seq 1 $NUM_SERVERS`; do
 	else
 		sleep .1
 	fi
-done
-
-for i in `seq 1 $NUM_CLIENT_MACHINES`; do
-	mc=`expr $i + 1`
-	client_id=`expr $mc - 2`
-	ssh -oStrictHostKeyChecking=no node-$mc.RDMA.fawn.apt.emulab.net "cd HERD; ./run-machine.sh $client_id" &
-	echo "Starting client $client_id"
-
-	# Removing this sleep sometimes causes the tput to drop drastically.
-	# Bug: which part of the code requires clients to connect in order?
-	sleep .5
 done
 
